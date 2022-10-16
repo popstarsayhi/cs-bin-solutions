@@ -221,4 +221,233 @@ console.log(disemvowel('BANANA')); // => 'BNN'
 console.log(disemvowel('hello world')); // => 'hll wrld'
 
 
+/* =========== *
+* Challenge 13 *
+* ============ */
+
+function divisibleByFivePairSum(array){
+  //return index of element which adding together is a multiple of 5 
+  let arr = []
+  for(let i = 0; i < array.length; i++){
+    for(let j = i+1; j < array.length; j++){
+      if((array[i] + array[j]) % 5 === 0){
+        arr.push([i, j])
+      }
+    }
+  }
+  return arr
+  
+}
+
+
+//Uncomment the lines below to test your function:
+
+console.log(divisibleByFivePairSum([1, 5, 2, 0, 4])); // => [ [ 0, 4 ], [ 1, 3 ] ]
+console.log(divisibleByFivePairSum([13, 22, 8, -3, 12])); // => [[ 0, 1 ], [ 0, 3 ], [ 0, 4 ], [ 1, 2 ], [ 2, 3 ], [ 2, 4 ]]
+
+
+/* =========== *
+* Challenge 14 *
+* ============ */
+
+function highestScore(students) {
+  
+  let maxScore = 0
+  let initial = ''
+  let id = 0
+  for(let i = 0; i < students.length; i++){
+    if(maxScore < students[i].score){
+       maxScore = students[i].score
+       initial = getInitials(students[i].name)
+       id = students[i].id
+    }
+  }
+  return initial+id
+  
+}
+
+function getInitials(name){
+  
+  let initial = name.split(' ').map((el,index,array)=>{
+    if(index == 0 || index == array.length-1){
+    return el[0]
+    }
+  }).join('')
+  
+  return initial
+}
+
+//Uncomment the lines below to test your function:
+
+var students = [
+{name: 'Will Sentance', id: 128, score: -42},
+{name: 'Jamie Bradshaw', id: 32, score: 57},
+{name: 'Lisa Simpson', id: 2, score: 99},
+{name: 'Luke Skywalker', id: 256, score: 94}
+];
+
+console.log(highestScore(students)); //=> 'LS2'
+
+
+/* =========== *
+* Challenge 15 *
+* ============ */
+
+function leastCommonMultiple(num1, num2) {
+  return num1 * num2 / getGcd(num1, num2);
+}
+
+  //get the most common divisor 
+function getGcd(num1, num2) {
+    let max = Math.max(num1, num2);
+    let min = Math.min(num1, num2);
+    if (max % min === 0) {
+        return min;
+    } else {
+        return getGcd(max % min, min);
+    }
+}
+  
+//Uncomment the lines below to test your function:
+
+console.log(leastCommonMultiple(2, 3)); //=> 6
+console.log(leastCommonMultiple(6, 10)); //=> 30
+console.log(leastCommonMultiple(24, 26)); //=> 312
+
+
+/* ========== *
+* Extension 1 *
+* =========== */
+
+function arrayBuilder(count) {
+  //console.log(count)
+  let arr = []
+  for(let item in count){
+    //console.log(count[item])
+    for(let i = 0; i < count[item]; i++){
+      arr.push(item)
+    }
+  }
+  return arr
+  
+}
+
+
+//Uncomment the lines below to test your function:
+
+console.log(arrayBuilder({'cats': 2, 'dogs': 1})); //=> ['cats', 'cats', 'dogs']
+console.log(arrayBuilder({})); //=> []
+
+
+
+/* ========== *
+* Extension 2 *
+* =========== */
+
+function objectBuilder(count) {
+  
+  let obj = {}
+  
+    for(let i = 0; i <= count; i++){
+      obj[i] = i*5
+  }
+  
+  return obj
+
+}
+
+
+//Uncomment the lines below to test your function:
+
+console.log(objectBuilder(4)); 
+//=> {
+  // 0: 0,
+  // 1: 5,
+  // 2: 10,
+  // 3: 15,
+  // 4: 20,
+//}
+console.log(objectBuilder(0)); //=> { 0: 0 }
+
+
+/* ========== *
+* Extension 3 *
+* =========== */
+
+function secretCipher(sentence, cipher){
+  
+  //console.log(Object.keys(cipher))
+  // /?/ is not valid, need to write as \/?/
+ //  let re = new RegExp(Object.keys(cipher).join("|"),"gi");
+  
+//   return sentence.replace(re, function(key){
+//       return cipher[key.toLowerCase()];
+//     });
+  
+  let arr1 = Object.keys(cipher)
+  let arr2 = Object.values(cipher)
+  let str = sentence
+  
+  for(let i = 0; i < arr1.length; i++){
+    str = sentence.replaceAll(arr1[i], arr2[i])
+  }
+  
+  return str
+
+}
+
+//Uncomment the lines below to test your function:
+
+console.log(secretCipher("lqq me on flcebzzk" , { l : "a", q : "d", z: "o"})); //=> "add me on facebook"
+console.log(secretCipher("where are you???" , { v : "l", '?' : "!"})) //=> "where are you!!!"
+console.log(secretCipher("twmce" , { m : "n", t : "d", w : "a"})); //=> "dance"
+
+
+/* ========== *
+* Extension 4 *
+* =========== */
+
+function passingStudents(students) {
+  
+  //console.log(students[0].grades[0].score)
+  
+  let arr = []
+  
+  students.forEach(item =>{
+    //console.log(item.grades)
+    for(let i = 0; i < item.grades.length; i++){
+      //console.log(item.grades[i].score)
+      if(item.grades[i].score >= 70){
+        arr.push(item.name)
+      }
+    }
+  })
+  
+  return [...new Set(arr)]
+  
+}
+
+
+//Uncomment the lines below to test your function:
+
+var students = [
+  {
+    "name": "Marco",
+    "id": 12345,
+    "grades": [{"id": 0, "score": 65}, {"id": 1, "score": 75}, {"id": 2, "score": 85}]
+  },
+  {
+    "name": "Donna",
+    "id": 55555,
+    "grades": [{"id": 0, "score": 100}, {"id": 1, "score": 100}, {"id": 2, "score": 100}]
+  },
+  {
+    "name": "Jukay",
+    "id": 94110,
+    "grades": [{"id": 0, "score": 65}, {"id": 1, "score": 60}, {"id": 2, "score": 65}]
+  }
+];
+
+console.log(passingStudents(students)); // => [ 'Marco', 'Donna' ]
+
 
