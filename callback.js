@@ -235,6 +235,163 @@ const decimals = [1.3, 2.1, 2.4];
 const floored = function(num) { return Math.floor(num); };
 console.log(groupBy(decimals, floored)); // should log: { 1: [1.3], 2: [2.1, 2.4] }
 
+// Challenge 16
+function goodKeys(obj, callback) {
+    let matches = [];
+
+    Object.keys(obj).forEach(k => {
+        if (callback(obj[k])) {
+            matches.push(k);
+        }
+    });
+
+    return matches;
+}
+
+// /*** Uncomment these to check your work! ***/
+const sunny = {
+    mac: 'priest',
+    dennis: 'calculating',
+    charlie: 'birdlaw',
+    dee: 'bird',
+    frank: 'warthog'
+};
+const startsWithBird = function (str) {
+    return str.slice(0, 4).toLowerCase() === 'bird';
+};
+console.log(goodKeys(sunny, startsWithBird)); // should log: ['charlie', 'dee']
+
+
+// Challenge 17
+function commutative(func1, func2, value) {
+    return func2(func1(value)) === func1(func2(value));
+}
+
+// /*** Uncomment these to check your work! ***/
+const multBy3 = n => n * 3;
+const divBy4 = n => n / 4;
+const subtract5 = n => n - 5;
+console.log(commutative(multBy3, divBy4, 11)); // should log: true
+console.log(commutative(multBy3, subtract5, 10)); // should log: false
+console.log(commutative(divBy4, subtract5, 48)); // should log: false
+
+
+// Challenge 18
+function objFilter(obj, callback) {
+    let newObj = {};
+
+    Object.keys(obj).forEach(k => {
+        if (obj[k] === callback(k)) {
+            newObj[k] = obj[k];
+        }
+    });
+
+    return newObj;
+}
+
+// /*** Uncomment these to check your work! ***/
+const startingObj = {};
+startingObj[6] = 3;
+startingObj[2] = 1;
+startingObj[12] = 4;
+const half = n => n / 2;
+console.log(objFilter(startingObj, half)); // should log: { 2: 1, 6: 3 }
+
+
+// Challenge 19
+function rating(arrOfFuncs, value) {
+    let count = 0;
+
+    if (arrOfFuncs.length === 0) {
+        return 0;
+    }
+
+    arrOfFuncs.forEach(f => f(value) ? count++ : null);
+
+    return (count / arrOfFuncs.length) * 100;
+}
+
+// /*** Uncomment these to check your work! ***/
+const isEven = n => n % 2 === 0;
+const greaterThanFour = n => n > 4;
+const isSquare = n => Math.sqrt(n) % 1 === 0;
+const hasSix = n => n.toString().includes('6');
+const checks = [isEven, greaterThanFour, isSquare, hasSix];
+console.log(rating(checks, 64)); // should log: 100
+console.log(rating(checks, 66)); // should log: 75
+
+
+// Challenge 20
+function pipe(arrOfFuncs, value) {
+    if (arrOfFuncs.length === 0) {
+        return value;
+    }
+    let newValue = arrOfFuncs.shift()(value);
+    // stopping at zero is easier to read but this is one less loop
+    if (arrOfFuncs.length === 1) {
+        return arrOfFuncs[0](newValue);
+    }
+
+    return pipe(arrOfFuncs, newValue);
+}
+
+// /*** Uncomment these to check your work! ***/
+const capitalize = str => str.toUpperCase();
+const addLowerCase = str => str + str.toLowerCase();
+const repeat = str => str + str;
+const capAddlowRepeat = [capitalize, addLowerCase, repeat];
+console.log(pipe(capAddlowRepeat, 'cat')); // should log: 'CATcatCATcat'
+
+
+// Challenge 21
+function highestFunc(objOfFuncs, subject) {
+    let keys = Object.keys(objOfFuncs);
+
+    return keys.slice(1).reduce(
+        (a, b) => (objOfFuncs[a](subject) > objOfFuncs[b](subject)) ? a : b,
+        keys[0]
+    );
+}
+
+// /*** Uncomment these to check your work! ***/
+const groupOfFuncs = {};
+groupOfFuncs.double = n => n * 2;
+groupOfFuncs.addTen = n => n + 10;
+groupOfFuncs.inverse = n => n * -1;
+console.log(highestFunc(groupOfFuncs, 5)); // should log: 'addTen'
+console.log(highestFunc(groupOfFuncs, 11)); // should log: 'double'
+console.log(highestFunc(groupOfFuncs, -20)); // should log: 'inverse'
+
+
+// Challenge 22
+function combineOperations(startVal, arrOfFuncs) {
+    return pipe(arrOfFuncs, startVal);
+}
+
+function addTen(num) {
+    return num + 10;
+}
+
+function add100(num) {
+    return num + 100;
+}
+
+function divByFive(num) {
+    return num / 5;
+}
+
+function multiplyByThree(num) {
+    return num * 3;
+}
+
+function multiplyByFive(num) {
+    return num * 5;
+}
+
+// /*** Uncomment these to check your work! ***/
+console.log(combineOperations(0, [add100, divByFive, multiplyByThree])); // Should output 60 -->
+console.log(combineOperations(0, [divByFive, multiplyByFive, addTen])); // Should output 10
+
 
 // Challenge 23
 function myFunc(array, callback) {
