@@ -22,3 +22,15 @@ function delayedGreet() {
 // Uncomment the following line to check your work!
 delayedGreet(); // should log (after 3 seconds): welcome
 
+
+/* CHALLENGE 3 */
+
+function helloGoodbye() {
+  console.log("hello")
+  setTimeout(function(){
+    console.log("good bye")
+  },3000)
+}
+// Uncomment the following line to check your work!
+helloGoodbye(); // should log: hello // should also log (after 3 seconds): good bye
+
