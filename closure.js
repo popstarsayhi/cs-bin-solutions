@@ -175,4 +175,96 @@ console.log(getDay()); // => should log 'Sat'
 console.log(getDay()); // => should log 'Sun'
 console.log(getDay()); // => should log 'Fri'
 
+// CHALLENGE 10
+function defineFirstArg(func, arg) {
+  return val => func(arg,val)
+}
+
+// /*** Uncomment these to check your work! ***/
+const subtract = function(big, small) { return big - small; };
+const subFrom20 = defineFirstArg(subtract, 20);
+console.log(subFrom20(5)); // => should log 15
+
+// CHALLENGE 11
+function dateStamp(func) {
+  let obj = {}
+  let today = new Date().toISOString().slice(0, 10)
+  
+  return function(val){
+    obj[today] = func(val)
+    return obj
+  }
+}
+
+// /*** Uncomment these to check your work! ***/
+const stampedMultBy2 = dateStamp(n => n * 2);
+console.log(stampedMultBy2(4)); // => should log { date: (today's date), output: 8 }
+console.log(stampedMultBy2(6)); // => should log { date: (today's date), output: 12 }
+
+// CHALLENGE 14
+function callTimes() {
+  let counter = 0
+  return function(){
+    counter++
+    console.log(counter)
+  }
+}
+
+// /*** Uncomment these to check your work! ***/
+let myNewFunc1 = callTimes();
+let myNewFunc2 = callTimes();
+myNewFunc1(); // => 1
+myNewFunc1(); // => 2
+myNewFunc2(); // => 1
+myNewFunc2(); // => 2
+
+
+// CHALLENGE 15
+function roulette(num) {
+  
+  let counter = 0
+  return function(){
+    if(counter > num-1) return 'pick a number and play again'
+    counter++
+    return counter === num? 'win':'spin'
+  }
+}
+
+// /*** Uncomment these to check your work! ***/
+const play = roulette(3);
+console.log(play()); // => should log 'spin', 0
+console.log(play()); // => should log 'spin', 1
+console.log(play()); // => should log 'win', 2
+console.log(play()); // => should log 'pick a number to play again', 3
+console.log(play()); // => should log 'pick a number to play again', 4
+
+
+// CHALLENGE 16
+function average() {
+  
+  const arr = []
+  let avg
+  
+  return function (...args) {
+    if(arr.length === 0 && args.length === 0) return 0
+    if(args.length === 0) return avg
+    arr.push(args[0]);
+    let sum = arr.reduce((acc, curr) => acc + curr, 0);
+    avg = sum / arr.length;
+    return avg
+  }
+}
+
+// /*** Uncomment these to check your work! ***/
+const avgSoFar = average();
+console.log(avgSoFar()); // => should log 0
+console.log(avgSoFar(4)); // => should log 4
+console.log(avgSoFar(8)); // => should log 6
+console.log(avgSoFar()); // => should log 6
+console.log(avgSoFar(12)); // => should log 8
+console.log(avgSoFar()); // => should log 8
+
+
+
+
 
