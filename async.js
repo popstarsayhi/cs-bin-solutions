@@ -98,4 +98,35 @@ const createPromise = promised('wait for it...');
 createPromise.then((val) => console.log(val)); 
 // will log "wait for it..." to the console after 2 seconds
 
+/* CHALLENGE 10 */
+
+function debounce(callback, interval) {
+  let timer
+  let readyToCall = true
+  
+  return function(){
+    if(readyToCall){
+      readyToCall = false
+      timer = setTimeout(()=>{
+        readyToCall = true
+      },interval)
+      return callback()
+    }else{
+      clearTimeout(timer)
+      timer = setTimeout(()=>{
+        readyToCall = true
+      },interval)
+    }
+    return "undefined"
+  }
+  
+}
+
+// UNCOMMENT THESE TO TEST YOUR WORK!
+function giveHi() { return 'hi'; }
+const giveHiSometimes = debounce(giveHi, 3000);
+console.log(giveHiSometimes()); // -> 'hi'
+setTimeout(function() { console.log(giveHiSometimes()); }, 2000); // -> undefined
+setTimeout(function() { console.log(giveHiSometimes()); }, 4000); // -> undefined
+setTimeout(function() { console.log(giveHiSometimes()); }, 8000); // -> 'hi'
 
