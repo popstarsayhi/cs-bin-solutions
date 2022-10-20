@@ -5,3 +5,4 @@
 3. Closures, Scope, and Execution Context (http://csbin.io/closures)
 4. Asynchronicity (http://csbin.io/async)
 6. Recursion (http://csbin.io/recursion)
+7. Promise (http://csbin.io/promises)
